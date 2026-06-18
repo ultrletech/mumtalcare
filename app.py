@@ -161,8 +161,10 @@ div[data-testid="stNumberInput"] label {
     color: #374151 !important;
     font-size: 0.9rem !important;
 }
+
+/* Red assess button */
 .stButton button {
-    background: linear-gradient(135deg, #8B4513, #A0522D) !important;
+    background: linear-gradient(135deg, #c0392b, #e74c3c) !important;
     color: white !important;
     border: none !important;
     border-radius: 12px !important;
@@ -170,17 +172,34 @@ div[data-testid="stNumberInput"] label {
     font-weight: 600 !important;
     font-size: 1rem !important;
     width: 100% !important;
-    box-shadow: 0 4px 16px rgba(139, 69, 19, 0.3) !important;
+    box-shadow: 0 4px 16px rgba(192, 57, 43, 0.4) !important;
     transition: all 0.2s !important;
 }
 .stButton button:hover {
     transform: translateY(-1px) !important;
-    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4) !important;
+    box-shadow: 0 6px 20px rgba(192, 57, 43, 0.5) !important;
 }
+
 div[data-testid="stSelectbox"] > div,
 div[data-testid="stNumberInput"] > div > div {
     border-radius: 10px !important;
     border-color: rgba(139, 69, 19, 0.2) !important;
+}
+
+/* Force dark dropdown menu with white text */
+ul[role="listbox"],
+div[data-baseweb="popover"],
+div[data-baseweb="menu"] {
+    background-color: #1a1a2e !important;
+}
+ul[role="listbox"] li,
+li[role="option"],
+li[role="option"] span {
+    color: #ffffff !important;
+    background-color: #1a1a2e !important;
+}
+li[role="option"]:hover {
+    background-color: #2d2d4a !important;
 }
 </style>
 """, unsafe_allow_html=True)
