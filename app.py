@@ -161,8 +161,7 @@ div[data-testid="stNumberInput"] label {
     color: #374151 !important;
     font-size: 0.9rem !important;
 }
-
-/* Red assess button */
+ 
 .stButton button {
     background: linear-gradient(135deg, #c0392b, #e74c3c) !important;
     color: white !important;
@@ -185,8 +184,7 @@ div[data-testid="stNumberInput"] > div > div {
     border-radius: 10px !important;
     border-color: rgba(139, 69, 19, 0.2) !important;
 }
-
-/* Force dark dropdown menu with white text */
+ 
 ul[role="listbox"],
 div[data-baseweb="popover"],
 div[data-baseweb="menu"] {
@@ -315,23 +313,27 @@ if assess:
     features = np.array([[age_val, marital_val, support_val, planned_val,
                           mental_val, loss_val, lbw_val, mood_val, sleep_val, weeks_val]])
     prediction = model.predict(features)[0]
+    confidence = model.predict_proba(features)[0][prediction] * 100
 
     if prediction == 0:
         st.markdown(f"""
         <div class="result-low">
             <div class="result-title">{c["low_title"]}</div>
+            <div style="font-size:0.8rem; color:#15803d; margin-bottom:0.5rem; font-weight:600;">Model confidence: {confidence:.0f}%</div>
             <div class="result-action">{c["low_action"]}</div>
         </div>""", unsafe_allow_html=True)
     elif prediction == 1:
         st.markdown(f"""
         <div class="result-medium">
             <div class="result-title">{c["med_title"]}</div>
+            <div style="font-size:0.8rem; color:#b45309; margin-bottom:0.5rem; font-weight:600;">Model confidence: {confidence:.0f}%</div>
             <div class="result-action">{c["med_action"]}</div>
         </div>""", unsafe_allow_html=True)
     else:
         st.markdown(f"""
         <div class="result-high">
             <div class="result-title">{c["high_title"]}</div>
+            <div style="font-size:0.8rem; color:#dc2626; margin-bottom:0.5rem; font-weight:600;">Model confidence: {confidence:.0f}%</div>
             <div class="result-action">{c["high_action"]}</div>
         </div>""", unsafe_allow_html=True)
 
