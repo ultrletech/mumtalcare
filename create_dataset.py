@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 np.random.seed(42)
-n = 200
+n = 1000
 
 age = np.random.randint(16, 45, n)
 marital_status = np.random.choice([0, 1], n, p=[0.3, 0.7])  # 0=single, 1=partnered
