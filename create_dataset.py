@@ -5,11 +5,11 @@ np.random.seed(42)
 n = 1000
 
 age = np.random.randint(16, 45, n)
-marital_status = np.random.choice([0, 1], n, p=[0.3, 0.7])  # 0=single, 1=partnered
+marital_status = np.random.choice([0, 1], n, p=[0.45, 0.55])  # 0=single, 1=partnered — calibrated to GDHS 2022 (55% married/partnered)
 partner_support = np.random.choice([0, 1, 2, 3], n, p=[0.15, 0.25, 0.35, 0.25])  # 0=none to 3=strong
 planned_pregnancy = np.random.choice([0, 1], n, p=[0.4, 0.6])  # 0=unplanned, 1=planned
 prior_mental_health = np.random.choice([0, 1], n, p=[0.75, 0.25])  # 0=no, 1=yes
-prev_pregnancy_loss = np.random.choice([0, 1], n, p=[0.7, 0.3])  # 0=no, 1=yes
+prev_pregnancy_loss = np.random.choice([0, 1], n, p=[0.82, 0.18])  # 0=no, 1=yes — calibrated to GDHS 2022 (18% pregnancy loss rate)
 low_birth_weight = np.random.choice([0, 1], n, p=[0.8, 0.2])  # 0=normal, 1=low
 self_reported_mood = np.random.choice([0, 1, 2, 3], n, p=[0.1, 0.3, 0.35, 0.25])  # 0=very low to 3=good
 sleep_quality = np.random.choice([0, 1, 2], n, p=[0.2, 0.45, 0.35])  # 0=very poor to 2=okay

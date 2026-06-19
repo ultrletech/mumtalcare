@@ -227,14 +227,14 @@ c = {
     "q9_opts": ["Very poor", "Poor", "Okay"],
     "q10": "Weeks since delivery",
     "q10_opts": ["0–2 weeks", "3–6 weeks", "6–12 weeks", "12+ weeks"],
-    "btn": "🔍 Assess Risk",
+    "btn": "Assess Risk",
     "low_title": "🟢 Low Risk",
     "med_title": "🟡 Medium Risk — Monitor Closely",
     "high_title": "🔴 High Risk — Refer Now",
     "low_action": "Continue routine postnatal care. Check in again at next scheduled visit.",
     "med_action": "Schedule a follow-up visit within 1 week. Discuss support systems with the mother. Consider referral if symptoms worsen.",
     "high_action": "Refer to the nearest mental health officer or psychiatric nurse today. Do not leave mother alone. Alert a trusted family member if available.",
-    "factors_title": "⚠️ Key risk factors identified",
+    "factors_title": "Key risk factors identified",
     "factors": {
         "age": "Young maternal age (under 20)",
         "marital": "No partner or relationship support",
@@ -254,7 +254,7 @@ c = {
 # ── Hero ──────────────────────────────────────────────────────────
 st.markdown(f"""
 <div class="hero">
-    <div class="hero-icon">🤱</div>
+    <div class="hero-icon"></div>
     <h1 class="hero-title">{c["title"]}</h1>
     <p class="hero-subtitle">{c["subtitle"]}</p>
     <p class="hero-desc">{c["description"]}</p>
@@ -273,14 +273,14 @@ st.markdown("""
         <div class="stat-label">Risk Factors Assessed</div>
     </div>
     <div class="stat-item">
-        <div class="stat-num">88%</div>
+        <div class="stat-num">93%</div>
         <div class="stat-label">Model Accuracy</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
 # ── Input form ────────────────────────────────────────────────────
-st.markdown(f'<div class="section-card"><p class="section-title">📋 {c["section"]}</p>', unsafe_allow_html=True)
+st.markdown(f'<div class="section-card"><p class="section-title">{c["section"]}</p>', unsafe_allow_html=True)
 
 age = st.number_input(c["q1"], min_value=13, max_value=55, value=25)
 marital = st.selectbox(c["q2"], c["q2_opts"])
@@ -352,9 +352,9 @@ if assess:
     factors_html = ""
     if found_factors:
         for f in found_factors:
-            factors_html += f'<div class="factor-item">⚠️ {f}</div>'
+            factors_html += f'<div class="factor-item">{f}</div>'
     else:
-        factors_html = f'<div class="factor-item">✅ {c["no_factors"]}</div>'
+        factors_html = f'<div class="factor-item">{c["no_factors"]}</div>'
 
     st.markdown(f"""
     <div class="factors-card">
