@@ -6,7 +6,9 @@ import joblib
 model = joblib.load('ppd_model.pkl')
 
 # ── Page config ───────────────────────────────────────────────────
-st.set_page_config(page_title="Mumtal Care", page_icon="🤱", layout="centered")
+from PIL import Image
+favicon = Image.open("logo.png")
+st.set_page_config(page_title="Mumtal Care", page_icon=favicon, layout="centered")
 
 # ── Custom CSS ────────────────────────────────────────────────────
 st.markdown("""
@@ -269,7 +271,7 @@ c = {
 # ── Hero ──────────────────────────────────────────────────────────
 import base64
 
-with open("logo1.png", "rb") as f:
+with open("logo.png", "rb") as f:
     logo_base64 = base64.b64encode(f.read()).decode()
 
 st.markdown(f"""
