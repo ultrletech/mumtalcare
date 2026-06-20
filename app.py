@@ -29,7 +29,15 @@ html, body, [class*="css"] {
     margin-bottom: 2rem;
     box-shadow: 0 8px 32px rgba(139, 69, 19, 0.25);
 }
-.hero-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+.hero-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    padding: 8px;
+}
 .hero-title {
     font-size: 3rem;
     font-weight: 700;
@@ -259,9 +267,14 @@ c = {
 }
 
 # ── Hero ──────────────────────────────────────────────────────────
+import base64
+
+with open("logo1.png", "rb") as f:
+    logo_base64 = base64.b64encode(f.read()).decode()
+
 st.markdown(f"""
 <div class="hero">
-    <div class="hero-icon"></div>
+    <img src="data:image/png;base64,{logo_base64}" class="hero-logo">
     <h1 class="hero-title">{c["title"]}</h1>
     <p class="hero-subtitle">{c["subtitle"]}</p>
     <p class="hero-desc">{c["description"]}</p>
