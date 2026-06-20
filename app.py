@@ -295,7 +295,7 @@ st.markdown("""
         <div class="stat-label">Risk Factors Assessed</div>
     </div>
     <div class="stat-item">
-        <div class="stat-num">88+%</div>
+        <div class="stat-num">93%</div>
         <div class="stat-label">Model Accuracy</div>
     </div>
 </div>
