@@ -31,28 +31,27 @@ html, body, [class*="css"] {
 }
 .hero-icon { font-size: 3rem; margin-bottom: 0.5rem; }
 .hero-title {
-    font-size: 2.4rem;
+    font-size: 3rem;
     font-weight: 700;
     color: #ffffff;
     margin: 0;
     letter-spacing: -0.5px;
 }
 .hero-subtitle {
-    font-size: 1rem;
-    color: rgba(255,255,255,0.85);
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.95);
     margin: 0.4rem 0 0;
-    font-weight: 400;
+    font-weight: 600;
     text-align: center;
 }
 .hero-desc {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: rgba(255,255,255,0.7);
     margin: 1rem auto 0;
     line-height: 1.6;
-    max-width: 600px;
+    max-width: 700px;
     text-align: center;
-    white-space: nowrap;
-}
+} 
 
 .section-card {
     background: #ffffff;
@@ -68,7 +67,8 @@ html, body, [class*="css"] {
     color: #A0522D;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 1.2rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
 }
 
 .result-low {
@@ -161,7 +161,7 @@ div[data-testid="stNumberInput"] label {
     color: #374151 !important;
     font-size: 0.9rem !important;
 }
- 
+
 .stButton button {
     background: linear-gradient(135deg, #c0392b, #e74c3c) !important;
     color: white !important;
@@ -178,13 +178,18 @@ div[data-testid="stNumberInput"] label {
     transform: translateY(-1px) !important;
     box-shadow: 0 6px 20px rgba(192, 57, 43, 0.5) !important;
 }
+.stButton button:disabled {
+    background: #d1d5db !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+}
 
 div[data-testid="stSelectbox"] > div,
 div[data-testid="stNumberInput"] > div > div {
     border-radius: 10px !important;
     border-color: rgba(139, 69, 19, 0.2) !important;
 }
- 
+
 ul[role="listbox"],
 div[data-baseweb="popover"],
 div[data-baseweb="menu"] {
@@ -206,7 +211,7 @@ li[role="option"]:hover {
 c = {
     "title": "Mumtal Care",
     "subtitle": "Postpartum Depression Risk Screener",
-    "description": "A clinical screening tool for midwives & community health workers across Ghana.",
+    "description": "For Ghana's Community Health Nurses and Officers to screen new mothers for postpartum depression risk during postnatal visits.",
     "section": "Mother's Information",
     "q1": "Age of mother (years)",
     "q2": "Marital / relationship status",
@@ -227,6 +232,8 @@ c = {
     "q9_opts": ["Very poor", "Poor", "Okay"],
     "q10": "Weeks since delivery",
     "q10_opts": ["0–2 weeks", "3–6 weeks", "6–12 weeks", "12+ weeks"],
+    "q11": "Has the mother expressed thoughts of harming herself or the baby?",
+    "q11_opts": ["No", "Yes"],
     "btn": "Assess Risk",
     "low_title": "🟢 Low Risk",
     "med_title": "🟡 Medium Risk — Monitor Closely",
@@ -279,24 +286,44 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ── Input form ────────────────────────────────────────────────────
-st.markdown(f'<div class="section-card"><p class="section-title">{c["section"]}</p>', unsafe_allow_html=True)
-
-age = st.number_input(c["q1"], min_value=13, max_value=55, value=25)
-marital = st.selectbox(c["q2"], c["q2_opts"])
-support = st.selectbox(c["q3"], c["q3_opts"])
-planned = st.selectbox(c["q4"], c["q4_opts"])
-mental = st.selectbox(c["q5"], c["q5_opts"])
-loss = st.selectbox(c["q6"], c["q6_opts"])
-lbw = st.selectbox(c["q7"], c["q7_opts"])
-mood = st.selectbox(c["q8"], c["q8_opts"])
-sleep = st.selectbox(c["q9"], c["q9_opts"])
-weeks = st.selectbox(c["q10"], c["q10_opts"])
-
+# ── Safety check — always shown first ──────────────────────────────
+st.markdown('<div class="section-card"><p class="section-title">Safety Check — Answer First</p>', unsafe_allow_html=True)
+safety = st.selectbox(c["q11"], c["q11_opts"], index=None, placeholder="Select an answer")
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ── Assess button ─────────────────────────────────────────────────
-assess = st.button(c["btn"], type="primary", use_container_width=True)
+assess = False
+
+if safety == "Yes":
+    st.markdown("""
+    <div class="result-high">
+        <div class="result-title">🔴 SAFETY ALERT</div>
+        <div style="font-size:0.85rem; color:#dc2626; font-weight:700; margin-bottom:0.5rem;">Act immediately — do not wait for further assessment.</div>
+        <div class="result-action">Refer to the nearest mental health officer or psychiatric nurse immediately. Do not leave mother alone. Alert a trusted family member if available. This takes priority over all other questions.</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+elif safety == "No":
+    st.markdown(f'<div class="section-card"><p class="section-title">{c["section"]}</p>', unsafe_allow_html=True)
+
+    age = st.number_input(c["q1"], min_value=13, max_value=55, value=None, placeholder="Enter age")
+    marital = st.selectbox(c["q2"], c["q2_opts"], index=None, placeholder="Select an answer")
+    support = st.selectbox(c["q3"], c["q3_opts"], index=None, placeholder="Select an answer")
+    planned = st.selectbox(c["q4"], c["q4_opts"], index=None, placeholder="Select an answer")
+    mental = st.selectbox(c["q5"], c["q5_opts"], index=None, placeholder="Select an answer")
+    loss = st.selectbox(c["q6"], c["q6_opts"], index=None, placeholder="Select an answer")
+    lbw = st.selectbox(c["q7"], c["q7_opts"], index=None, placeholder="Select an answer")
+    mood = st.selectbox(c["q8"], c["q8_opts"], index=None, placeholder="Select an answer")
+    sleep = st.selectbox(c["q9"], c["q9_opts"], index=None, placeholder="Select an answer")
+    weeks = st.selectbox(c["q10"], c["q10_opts"], index=None, placeholder="Select an answer")
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    all_answered = all([age is not None, marital, support, planned, mental, loss, lbw, mood, sleep, weeks])
+
+    assess = st.button(c["btn"], type="primary", use_container_width=True, disabled=not all_answered)
+
+    if not all_answered:
+        st.caption("Please answer all questions above to enable assessment.")
 
 if assess:
     age_val = int(age)
@@ -330,12 +357,8 @@ if assess:
             <div class="result-action">{c["med_action"]}</div>
         </div>""", unsafe_allow_html=True)
     else:
-        st.markdown(f"""
-        <div class="result-high">
-            <div class="result-title">{c["high_title"]}</div>
-            <div style="font-size:0.8rem; color:#dc2626; margin-bottom:0.5rem; font-weight:600;">Model confidence: {confidence:.0f}%</div>
-            <div class="result-action">{c["high_action"]}</div>
-        </div>""", unsafe_allow_html=True)
+        high_block = "<div class='result-high'><div class='result-title'>" + c["high_title"] + "</div><div style='font-size:0.8rem; color:#dc2626; margin-bottom:0.5rem; font-weight:600;'>Confidence: " + str(round(confidence)) + "%</div><div class='result-action'>" + c["high_action"] + "</div></div>"
+        st.markdown(high_block, unsafe_allow_html=True)
 
     found_factors = []
     if age_val < 20: found_factors.append(c["factors"]["age"])
