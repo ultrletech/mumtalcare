@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mumtal Care - Offline</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* { box-sizing: border-box; }
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #fdf6f0 0%, #fef9f5 50%, #fdf0e8 100%);
+    margin: 0;
+    padding: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.hero {
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 40%, #CD853F 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+.hero h1 { margin: 0; font-size: 2rem; }
+.hero p { margin: 0.5rem 0 0; opacity: 0.9; font-size: 0.9rem; }
+.offline-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+}
+.section-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 16px rgba(139, 69, 19, 0.08);
+}
+.section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #A0522D;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+label {
+    display: block;
+    font-size: 0.9rem;
+    color: #374151;
+    margin-bottom: 0.4rem;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+select, input {
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: 10px;
+    border: 1px solid rgba(139,69,19,0.2);
+    background: #1a1a2e;
+    color: white;
+    font-size: 0.95rem;
+}
+button {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.9rem;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 1.5rem;
+    cursor: pointer;
+}
+button:disabled { background: #d1d5db; cursor: not-allowed; }
+#result {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    border-radius: 16px;
+    display: none;
+}
+.result-low { background: #dcfce7; border-left: 5px solid #16a34a; }
+.result-medium { background: #fef3c7; border-left: 5px solid #d97706; }
+.result-high { background: #ffe4e6; border-left: 5px solid #dc2626; }
+#result h3 { margin: 0 0 0.5rem; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>Mumtal Care</h1>
+    <p>Postpartum Depression Risk Screener</p>
+    <div class="offline-badge">📴 Works fully offline</div>
+</div>
+
+<div class="section-card">
+    <p class="section-title">Mother's Information</p>
+
+    <label>Age of mother</label>
+    <input type="number" id="age" min="13" max="55" placeholder="Enter age">
+
+    <label>Marital / relationship status</label>
+    <select id="marital">
+        <option value="">Select</option>
+        <option value="0">Single / No partner</option>
+        <option value="1">Married / Has partner</option>
+    </select>
+
+    <label>Partner or family support level</label>
+    <select id="support">
+        <option value="">Select</option>
+        <option value="0">None</option>
+        <option value="1">Little</option>
+        <option value="2">Moderate</option>
+        <option value="3">Strong</option>
+    </select>
+
+    <label>Was the pregnancy planned?</label>
+    <select id="planned">
+        <option value="">Select</option>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+    </select>
+
+    <label>History of depression or mental illness?</label>
+    <select id="mental">
+        <option value="">Select</option>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+    </select>
+
+    <label>Previous miscarriage or pregnancy loss?</label>
+    <select id="loss">
+        <option value="">Select</option>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+    </select>
+
+    <label>Baby's birth weight</label>
+    <select id="lbw">
+        <option value="">Select</option>
+        <option value="0">Normal birth weight</option>
+        <option value="1">Low birth weight</option>
+    </select>
+
+    <label>Self-reported mood (past 2 weeks)</label>
+    <select id="mood">
+        <option value="">Select</option>
+        <option value="0">Very low</option>
+        <option value="1">Low</option>
+        <option value="2">Mostly okay</option>
+        <option value="3">Good</option>
+    </select>
+
+    <label>Sleep quality since birth</label>
+    <select id="sleep">
+        <option value="">Select</option>
+        <option value="0">Very poor</option>
+        <option value="1">Poor</option>
+        <option value="2">Okay</option>
+    </select>
+
+    <label>Weeks since delivery</label>
+    <select id="weeks">
+        <option value="">Select</option>
+        <option value="0">0–2 weeks</option>
+        <option value="1">3–6 weeks</option>
+        <option value="2">6–12 weeks</option>
+        <option value="3">12+ weeks</option>
+    </select>
+
+    <button id="assessBtn" disabled>Assess Risk</button>
+</div>
+
+<div id="result"></div>
+
+<script src="ort.min.js"></script>
+<script>
+ort.env.wasm.wasmPaths = './';
+</script>
+<script src="app.js"></script>
+</body>
+</html>

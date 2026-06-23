@@ -1,0 +1,22 @@
+{
+    "name": "Mumtal Care",
+    "short_name": "Mumtal Care",
+    "description": "Postpartum Depression Risk Screener for Ghana's Community Health Nurses and Officers",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#fdf6f0",
+    "theme_color": "#8B4513",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
