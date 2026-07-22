@@ -205,14 +205,25 @@ div[data-baseweb="popover"],
 div[data-baseweb="menu"] {
     background-color: #1a1a2e !important;
 }
+ul[role="listbox"],
+div[data-baseweb="popover"],
+div[data-baseweb="menu"],
+div[data-baseweb="select"] ul {
+    background-color: #1a1a2e !important;
+}
 ul[role="listbox"] li,
 li[role="option"],
-li[role="option"] span {
+li[role="option"] span,
+li[role="option"] div,
+[data-baseweb="menu"] li,
+[data-baseweb="list"] li {
     color: #ffffff !important;
     background-color: #1a1a2e !important;
 }
-li[role="option"]:hover {
+li[role="option"]:hover,
+li[role="option"][aria-selected="true"] {
     background-color: #2d2d4a !important;
+    color: #ffffff !important;
 }
 </style>
 """, unsafe_allow_html=True)
