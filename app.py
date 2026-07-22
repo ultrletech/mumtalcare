@@ -200,31 +200,35 @@ div[data-testid="stNumberInput"] > div > div {
     border-color: rgba(139, 69, 19, 0.2) !important;
 }
 
+/* Dropdown popover container (newer Streamlit uses this test id) */
+div[data-testid="stVirtualDropdown"],
 ul[role="listbox"],
 div[data-baseweb="popover"],
 div[data-baseweb="menu"] {
     background-color: #1a1a2e !important;
 }
-ul[role="listbox"],
-div[data-baseweb="popover"],
-div[data-baseweb="menu"],
-div[data-baseweb="select"] ul {
-    background-color: #1a1a2e !important;
-}
+
+/* Every option row + all nested text inside it */
+div[data-testid="stVirtualDropdown"] li,
+div[data-testid="stVirtualDropdown"] [role="option"],
+div[data-testid="stVirtualDropdown"] [role="option"] *,
 ul[role="listbox"] li,
 li[role="option"],
-li[role="option"] span,
-li[role="option"] div,
+li[role="option"] *,
 [data-baseweb="menu"] li,
 [data-baseweb="list"] li {
     color: #ffffff !important;
     background-color: #1a1a2e !important;
 }
+
+/* Hover / selected state */
+div[data-testid="stVirtualDropdown"] [role="option"]:hover,
+div[data-testid="stVirtualDropdown"] [role="option"][aria-selected="true"],
 li[role="option"]:hover,
 li[role="option"][aria-selected="true"] {
     background-color: #2d2d4a !important;
     color: #ffffff !important;
-}
+} 
 </style>
 """, unsafe_allow_html=True)
 
