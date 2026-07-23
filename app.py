@@ -424,8 +424,18 @@ components.html("""
     function fixDropdown(root) {
         const options = root.querySelectorAll('[role="option"], [role="listbox"]');
         options.forEach(el => {
+            if (el.dataset.mumtalStyled) return;
+            el.dataset.mumtalStyled = "true";
+
             el.style.setProperty('background-color', '#1a1a2e', 'important');
             el.style.setProperty('color', '#ffffff', 'important');
+
+            el.addEventListener('mouseenter', () => {
+                el.style.setProperty('background-color', '#2d2d4a', 'important');
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.setProperty('background-color', '#1a1a2e', 'important');
+            });
         });
     }
 
