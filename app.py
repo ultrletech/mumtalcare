@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import joblib
+import streamlit.components.v1 as components
 
 # Load the trained model
 model = joblib.load('ppd_model.pkl')
@@ -417,3 +418,29 @@ if assess:
 
 # ── Footer ────────────────────────────────────────────────────────
 st.markdown(f'<div class="footer">{c["footer"]}</div>', unsafe_allow_html=True)
+components.html("""
+<script>
+(function() {
+    function fixDropdown(root) {
+        const options = root.querySelectorAll('[role="option"], [role="listbox"]');
+        options.forEach(el => {
+            el.style.setProperty('background-color', '#1a1a2e', 'important');
+            el.style.setProperty('color', '#ffffff', 'important');
+        });
+    }
+
+    function scan() {
+        try {
+            const doc = window.parent.document;
+            fixDropdown(doc);
+            const observer = new MutationObserver(() => fixDropdown(doc));
+            observer.observe(doc.body, { childList: true, subtree: true });
+        } catch (e) {
+            console.log('Could not access parent document:', e);
+        }
+    }
+
+    scan();
+})();
+</script>
+""", height=0)
