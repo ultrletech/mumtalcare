@@ -33,5 +33,5 @@ Real patient data validation, through a hospital partnership under formal ethics
 2. Run: `streamlit run app.py`
 
 ## Built By
-Andrew Sam — KNUST, Kumasi, Ghana
+Sam Andrew Kweku — KNUST, Kumasi, Ghana
 Ghana AI Innovation Challenge 2026
