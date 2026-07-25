@@ -95,6 +95,50 @@ button:disabled { background: #d1d5db; cursor: not-allowed; }
 </head>
 <body>
 
+<div id="install-banner" style="
+  display: none;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 280px;
+  background-color: #8B4513;
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  font-family: sans-serif;
+  z-index: 9999;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  box-sizing: border-box;
+">
+  <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px;">
+    <span style="flex: 1; min-width: 0; font-size: 15px; font-weight: 600; line-height: 1.3; white-space: normal; word-break: normal; overflow-wrap: normal;">
+      Install App
+    </span>
+    <button id="dismiss-button" type="button" style="
+      background: transparent !important;
+      border: none !important;
+      color: white !important;
+      font-size: 16px !important;
+      cursor: pointer;
+      padding: 0 !important;
+      line-height: 1;
+      flex-shrink: 0;
+    ">✕</button>
+  </div>
+  <p style="font-size: 12px; margin: 0 0 10px 0; opacity: 0.9;">Works fully offline, no internet needed</p>
+  <button id="install-button" type="button" style="
+    width: 100%;
+    background-color: #ffffff;
+    color: #8B4513;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+  ">Install</button>
+</div>
+
 <div class="hero">
     <h1>Mumtal Care</h1>
     <p>Postpartum Depression Risk Screener</p>
@@ -187,5 +231,79 @@ button:disabled { background: #d1d5db; cursor: not-allowed; }
 ort.env.wasm.wasmPaths = './';
 </script>
 <script src="app.js"></script>
+<script>
+  // Only try this if the browser supports service workers (all modern mobile browsers do).
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((registration) => {
+          console.log('[App] Service worker registered:', registration.scope);
+        })
+        .catch((error) => {
+          console.error('[App] Service worker registration failed:', error);
+        });
+    });
+  }
+</script>
+<script>
+  // This will hold the browser's install prompt event so we can trigger it later,
+  // when the user clicks our custom "Install" button.
+  let deferredInstallPrompt = null;
+
+  const installBanner = document.getElementById('install-banner');
+  const installButton = document.getElementById('install-button');
+  const dismissButton = document.getElementById('dismiss-button');
+
+  // 'beforeinstallprompt' fires automatically when Chrome decides the app
+  // is installable (correct manifest.json, service worker registered, served over HTTPS or localhost).
+  window.addEventListener('beforeinstallprompt', (event) => {
+    // Stop Chrome's default mini-infobar from showing —
+    // we want to show OUR custom banner instead.
+    event.preventDefault();
+
+    // Save the event so we can trigger it later, when the user clicks our button.
+    deferredInstallPrompt = event;
+
+    // Don't show the banner immediately — wait a few seconds so it doesn't
+    // feel like a popup ad the moment the page loads.
+    setTimeout(() => {
+      // Only show it if the user hasn't already dismissed it this session.
+      if (!sessionStorage.getItem('installBannerDismissed')) {
+        installBanner.style.display = 'block';
+      }
+    }, 4000); // 4 seconds — adjust this number if you want it sooner/later
+  });
+
+  // When the user clicks our custom "Install" button:
+  installButton.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) return;
+
+    installBanner.style.display = 'none';
+
+    // This actually shows the browser's real install dialog.
+    deferredInstallPrompt.prompt();
+
+    // Wait to see whether the user accepted or dismissed it.
+    const choice = await deferredInstallPrompt.userChoice;
+    console.log('[App] Install choice:', choice.outcome); // 'accepted' or 'dismissed'
+
+    // This event can only be used once — clear it.
+    deferredInstallPrompt = null;
+  });
+
+  // When the user clicks the "✕" dismiss button:
+  dismissButton.addEventListener('click', () => {
+    installBanner.style.display = 'none';
+    // Remember the dismissal for this browser session, so it doesn't
+    // pop back up every time they navigate within the app.
+    sessionStorage.setItem('installBannerDismissed', 'true');
+  });
+
+  // Optional: if the app gets installed successfully, hide the banner for good this session
+  window.addEventListener('appinstalled', () => {
+    installBanner.style.display = 'none';
+    console.log('[App] Mumtal Care was installed');
+  });
+</script>
 </body>
 </html>
