@@ -1,3 +1,38 @@
+function getContributingFactors(values) {
+    // values order matches the `fields` array: age, marital, support, planned,
+    // mental, loss, lbw, mood, sleep, weeks
+    const [age, marital, support, planned, mental, loss, lbw, mood, sleep, weeks] = values;
+
+    const factorLabels = {
+        age: "Young maternal age (under 20)",
+        marital: "No partner or relationship support",
+        support: "Low partner/family support",
+        planned: "Unplanned pregnancy",
+        mental: "Prior history of depression or mental illness",
+        loss: "Previous pregnancy loss",
+        lbw: "Low birth weight baby",
+        mood: "Low self-reported mood",
+        sleep: "Very poor sleep quality",
+        weeks: "Early postpartum period (0–6 weeks)"
+    };
+
+    const found = [];
+    if (age < 20) found.push(factorLabels.age);
+    if (marital === 0) found.push(factorLabels.marital);
+    if (support < 2) found.push(factorLabels.support);
+    if (planned === 0) found.push(factorLabels.planned);
+    if (mental === 1) found.push(factorLabels.mental);
+    if (loss === 1) found.push(factorLabels.loss);
+    if (lbw === 1) found.push(factorLabels.lbw);
+    if (mood < 2) found.push(factorLabels.mood);
+    if (sleep === 0) found.push(factorLabels.sleep);
+    if (weeks < 2) found.push(factorLabels.weeks);
+
+    return found.length > 0
+        ? found
+        : ["No single dominant risk factor — combined pattern suggests elevated risk."];
+}
+
 let session;
 
 async function loadModel() {
@@ -56,5 +91,18 @@ function showResult(prediction, confidence, values) {
         <h3>${labels[prediction]}</h3>
         <p style="font-weight:600; font-size:0.85rem;">Confidence: ~${confidence}%</p>
         <p>${actions[prediction]}</p>
+    `;
+
+    // Factors card is rendered separately, outside the colored result box,
+    // so it stays neutral-colored regardless of risk level (matches online version).
+    const factorsDiv = document.getElementById('factors');
+    const factors = getContributingFactors(values);
+    const factorsHtml = factors.map(f => `<div class="factor-item">${f}</div>`).join('');
+
+    factorsDiv.style.display = 'block';
+    factorsDiv.className = 'factors-card';
+    factorsDiv.innerHTML = `
+        <p class="section-title" style="margin-top:0;">Key risk factors identified</p>
+        ${factorsHtml}
     `;
 }
