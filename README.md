@@ -23,10 +23,10 @@ clinical actions in under 2 minutes, along with the key contributing factors beh
 - ONNX Runtime Web (offline PWA)
 
 ## Dataset
-1,000-record synthetic dataset (not real patient data), generated via weighted random sampling and calibrated against Ghana's GDHS 2022-2023 national statistics
-Grounded in 5 published Ghanaian clinical studies
-Real-world accuracy has not yet been validated on actual patient data. Reported model metrics (93% test accuracy, 89.4% cross-validation) reflect performance on this synthetic dataset, not clinical performance
-Real patient data validation, through a hospital partnership under formal ethics approval, is the planned next step before any clinical deployment
+- 1,000-record **synthetic** dataset (not real patient data), generated via weighted random sampling and calibrated against Ghana's GDHS 2022-2023 national statistics
+- Grounded in 5 published Ghanaian clinical studies
+- Real-world accuracy has not yet been validated on actual patient data. Reported model metrics (93% test accuracy, 89.4% cross-validation) reflect performance on this synthetic dataset, not clinical performance
+- Real patient data validation, through a hospital partnership under formal ethics approval, is the planned next step before any clinical deployment
 
 ## How to Run
 1. Install dependencies: `pip install -r requirements.txt`
