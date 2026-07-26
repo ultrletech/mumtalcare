@@ -89,7 +89,7 @@ function showResult(prediction, confidence, values) {
     resultDiv.className = classes[prediction];
     resultDiv.innerHTML = `
         <h3>${labels[prediction]}</h3>
-        <p style="font-weight:600; font-size:0.85rem;">Confidence: ~${confidence}%</p>
+        <p style="font-weight:600; font-size:0.85rem;">Model confidence: ~${confidence}%</p>
         <p>${actions[prediction]}</p>
     `;
 

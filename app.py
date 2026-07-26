@@ -388,7 +388,7 @@ if assess:
             <div class="result-action">{c["med_action"]}</div>
         </div>""", unsafe_allow_html=True)
     else:
-        high_block = "<div class='result-high'><div class='result-title'>" + c["high_title"] + "</div><div style='font-size:0.8rem; color:#dc2626; margin-bottom:0.5rem; font-weight:600;'>Confidence: " + str(round(confidence)) + "%</div><div class='result-action'>" + c["high_action"] + "</div></div>"
+        high_block = "<div class='result-high'><div class='result-title'>" + c["high_title"] + "</div><div style='font-size:0.8rem; color:#dc2626; margin-bottom:0.5rem; font-weight:600;'>Model confidence: " + str(round(confidence)) + "%</div><div class='result-action'>" + c["high_action"] + "</div></div>"
         st.markdown(high_block, unsafe_allow_html=True)
 
     found_factors = []
